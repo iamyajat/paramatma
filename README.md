@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Paramatma
 
-## Getting Started
+A quiet, readable home for Hindu scriptures — 108 names (ashtottara), aartis,
+bhajans, stotras, and sahasranamas — in Devanagari with pronunciation and
+meaning. Built with Next.js and MongoDB.
 
-First, run the development server:
+## Setup
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. Copy `.env.example` to `.env.local` and fill in:
+   - `MONGODB_URI` — a MongoDB Atlas connection string (include the database name)
+   - `ADMIN_PASSWORD` — the password for `/admin`
+   - `SESSION_SECRET` — a random 32+ character string (`openssl rand -base64 32`)
+   - `NEXT_PUBLIC_SITE_URL` — `http://localhost:3000` for local dev
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies and seed a few sample works:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+   ```bash
+   npm install
+   npm run seed
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+3. Run the dev server:
 
-## Learn More
+   ```bash
+   npm run dev
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+   Visit [http://localhost:3000](http://localhost:3000), and
+   [http://localhost:3000/admin](http://localhost:3000/admin) to manage content.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Adding real content
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Content is entered through `/admin` — create a deity, then a work under it,
+pasting the text into the bulk-entry format shown in each editor (instructions
+appear above the content field for each content type). Saving parses the text
+into individual verse/name documents and publishes immediately when status is
+set to "Published".
 
-## Deploy on Vercel
+## Notes
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- **Data model**: each verse/name is its own MongoDB document (not nested in
+  an array), so it can later be individually vector-embedded for semantic
+  search — see `atlas/README.md`.
+- **OG images**: auto-generated per work at `/[type]/[slug]/opengraph-image`.
+  They render English text only — the underlying renderer (satori) doesn't
+  shape Devanagari conjuncts correctly, so scripture text itself is kept off
+  the share image. The actual site pages are unaffected, since real browsers
+  shape Devanagari correctly.
+- **Fonts**: `src/assets/fonts/` holds static (non-variable) Eczar TTF files
+  used only for OG image generation, under the SIL Open Font License.
+- **PWA**: the site is installable (manifest + icons + service worker) and
+  keeps previously visited pages readable offline. `src/lib/brand-icon.tsx`
+  is the one design used everywhere — `src/app/icon.tsx` and `apple-icon.tsx`
+  render it live via `next/og`; `npm run generate-icons` renders the sizes
+  Next can't generate itself (`favicon.ico`, and the PWA manifest's
+  `public/icons/*.png`) and writes them to disk. Re-run that script after
+  changing the design. `public/sw.js` is a small hand-written service worker
+  (network-first for pages, cache-first for static assets, `/admin` always
+  bypassed) — no build plugin, so it isn't tied to webpack vs. Turbopack.

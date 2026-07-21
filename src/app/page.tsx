@@ -1,65 +1,88 @@
-import Image from "next/image";
+import Link from "next/link";
+import { OmMark } from "@/components/icons/om-mark";
+import { VerseDivider } from "@/components/icons/verse-divider";
+import { CONTENT_TYPES, CONTENT_TYPE_META } from "@/lib/content-types";
+import { getRecentWorks } from "@/lib/data";
+import { WorkCard } from "@/components/work-card";
 
-export default function Home() {
+export default async function HomePage() {
+  const recentWorks = await getRecentWorks(6);
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <div>
+      <section className="mx-auto max-w-3xl px-4 pt-20 pb-16 text-center sm:px-6 sm:pt-28">
+        <OmMark className="text-6xl text-gold" />
+        <h1 className="mt-6 font-display text-4xl font-semibold text-ink sm:text-5xl">
+          <span lang="sa-Deva" className="block text-5xl sm:text-6xl">
+            परमात्मा
+          </span>
+        </h1>
+        <p className="mt-4 text-lg text-ink-muted">
+          A quiet home for the names, hymns, and prayers of the Hindu tradition —
+          offered here for reading, recitation, and remembrance.
+        </p>
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+          <Link
+            href="/deities"
+            className="rounded-full bg-maroon px-6 py-3 text-sm font-medium text-white shadow-soft transition-transform hover:scale-[1.02]"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            Browse by Deity
+          </Link>
+          <Link
+            href="/search"
+            className="rounded-full border border-border px-6 py-3 text-sm font-medium text-ink transition-colors hover:border-gold hover:text-gold"
           >
-            Documentation
-          </a>
+            Search Scriptures
+          </Link>
         </div>
-      </main>
+      </section>
+
+      <VerseDivider className="mb-16" />
+
+      <section className="mx-auto max-w-5xl px-4 pb-24 sm:px-6">
+        <h2 className="text-center font-display text-2xl font-semibold text-ink">
+          Explore by Type
+        </h2>
+        <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {CONTENT_TYPES.map((type) => {
+            const meta = CONTENT_TYPE_META[type];
+            return (
+              <Link
+                key={type}
+                href={`/${type}`}
+                className="group rounded-2xl border border-border bg-surface p-6 shadow-soft transition-all hover:-translate-y-0.5 hover:border-gold hover:shadow-lifted"
+              >
+                <span lang="sa-Deva" className="text-2xl text-gold">
+                  {meta.devanagari}
+                </span>
+                <h3 className="mt-3 font-display text-lg font-semibold text-ink">
+                  {meta.plural}
+                </h3>
+                <p className="mt-1 text-sm text-ink-muted">{meta.description}</p>
+                <span className="mt-4 inline-block text-sm text-maroon opacity-0 transition-opacity group-hover:opacity-100">
+                  Explore →
+                </span>
+              </Link>
+            );
+          })}
+        </div>
+      </section>
+
+      {recentWorks.length > 0 ? (
+        <>
+          <VerseDivider className="mb-16" />
+          <section className="mx-auto max-w-5xl px-4 pb-24 sm:px-6">
+            <h2 className="text-center font-display text-2xl font-semibold text-ink">
+              Recently Added
+            </h2>
+            <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {recentWorks.map((work) => (
+                <WorkCard key={work.id} work={work} />
+              ))}
+            </div>
+          </section>
+        </>
+      ) : null}
     </div>
   );
 }
