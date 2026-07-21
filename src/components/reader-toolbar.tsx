@@ -117,7 +117,7 @@ export function ReaderToolbar({ work }: { work: WorkSummary }) {
         Pronunciation
       </button>
 
-      <button
+      {/* <button
         type="button"
         onClick={() => {
           const next = !meaningsExpanded;
@@ -132,7 +132,7 @@ export function ReaderToolbar({ work }: { work: WorkSummary }) {
         }`}
       >
         {meaningsExpanded ? "Collapse meanings" : "Expand meanings"}
-      </button>
+      </button> */}
 
       <div className="ml-auto flex items-center gap-2">
         <BookmarkToggle work={work} />
