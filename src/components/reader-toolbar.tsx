@@ -1,6 +1,8 @@
 "use client";
 
-import { useEffect, useSyncExternalStore } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
+import type { WorkSummary } from "@/lib/data";
+import { BookmarkToggle } from "@/components/bookmark-toggle";
 
 const SCALE_STEPS = [0.875, 1, 1.125, 1.25, 1.375];
 const SCALE_KEY = "reader:scale";
@@ -50,14 +52,15 @@ function togglePronunciation() {
   notify();
 }
 
-function toggleAllMeanings(expand: boolean) {
+function setAllMeanings(expand: boolean) {
   const details = document.querySelectorAll<HTMLDetailsElement>(
     "#reader-content details.meaning"
   );
   details.forEach((d) => (d.open = expand));
 }
 
-export function ReaderToolbar() {
+export function ReaderToolbar({ work }: { work: WorkSummary }) {
+  const [meaningsExpanded, setMeaningsExpanded] = useState(false);
   const scaleIndex = useSyncExternalStore(subscribe, getScaleIndex, getScaleServerSnapshot);
   const pronunciationOn = useSyncExternalStore(
     subscribe,
@@ -116,27 +119,32 @@ export function ReaderToolbar() {
 
       <button
         type="button"
-        onClick={() => toggleAllMeanings(true)}
-        className="rounded-full border border-border px-3 py-1.5 text-xs font-medium text-ink-muted hover:border-gold hover:text-gold"
+        onClick={() => {
+          const next = !meaningsExpanded;
+          setAllMeanings(next);
+          setMeaningsExpanded(next);
+        }}
+        aria-pressed={meaningsExpanded}
+        className={`rounded-full border px-3 py-1.5 text-xs font-medium transition-colors ${
+          meaningsExpanded
+            ? "border-gold bg-gold-soft text-ink"
+            : "border-border text-ink-muted hover:border-gold hover:text-gold"
+        }`}
       >
-        Expand meanings
-      </button>
-      <button
-        type="button"
-        onClick={() => toggleAllMeanings(false)}
-        className="rounded-full border border-border px-3 py-1.5 text-xs font-medium text-ink-muted hover:border-gold hover:text-gold"
-      >
-        Collapse
+        {meaningsExpanded ? "Collapse meanings" : "Expand meanings"}
       </button>
 
-      <button
-        type="button"
-        onClick={() => window.print()}
-        aria-label="Print this page"
-        className="ml-auto rounded-full border border-border px-3 py-1.5 text-xs font-medium text-ink-muted hover:border-gold hover:text-gold"
-      >
-        Print
-      </button>
+      <div className="ml-auto flex items-center gap-2">
+        <BookmarkToggle work={work} />
+        <button
+          type="button"
+          onClick={() => window.print()}
+          aria-label="Print this page"
+          className="rounded-full border border-border px-3 py-1.5 text-xs font-medium text-ink-muted hover:border-gold hover:text-gold"
+        >
+          Print
+        </button>
+      </div>
     </div>
   );
 }

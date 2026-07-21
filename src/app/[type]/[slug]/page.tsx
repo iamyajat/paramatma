@@ -106,7 +106,7 @@ export default async function ContentPage({ params }: Props) {
 
       <VerseDivider className="mb-2" />
 
-      <ReaderToolbar />
+      <ReaderToolbar work={work} />
 
       <div
         id="reader-content"

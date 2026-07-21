@@ -33,6 +33,11 @@ export function SiteFooter() {
               </Link>
             </li>
             <li>
+              <Link href="/bookmarks" className="hover:text-gold">
+                Bookmarks
+              </Link>
+            </li>
+            <li>
               <Link href="/about" className="hover:text-gold">
                 About &amp; sources
               </Link>

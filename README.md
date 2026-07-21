@@ -46,14 +46,22 @@ set to "Published".
   shape Devanagari conjuncts correctly, so scripture text itself is kept off
   the share image. The actual site pages are unaffected, since real browsers
   shape Devanagari correctly.
-- **Fonts**: `src/assets/fonts/` holds static (non-variable) Eczar TTF files
-  used only for OG image generation, under the SIL Open Font License.
+- **Fonts**: `src/assets/fonts/` holds static (non-variable) TTF files used
+  only for satori-rendered images (OG images, favicons), under the SIL Open
+  Font License — Eczar for OG images, plus a Tiro Devanagari Sanskrit TTF
+  (extracted from the same cached file `next/font/google` already serves the
+  real site, so the ॐ mark matches pixel-for-pixel) for the app icon.
 - **PWA**: the site is installable (manifest + icons + service worker) and
   keeps previously visited pages readable offline. `src/lib/brand-icon.tsx`
-  is the one design used everywhere — `src/app/icon.tsx` and `apple-icon.tsx`
-  render it live via `next/og`; `npm run generate-icons` renders the sizes
-  Next can't generate itself (`favicon.ico`, and the PWA manifest's
-  `public/icons/*.png`) and writes them to disk. Re-run that script after
-  changing the design. `public/sw.js` is a small hand-written service worker
-  (network-first for pages, cache-first for static assets, `/admin` always
-  bypassed) — no build plugin, so it isn't tied to webpack vs. Turbopack.
+  is the one design used everywhere — ivory background, gold ॐ, matching
+  `om-mark.tsx` exactly — rendered live via `next/og` for `src/app/icon.tsx`
+  and `apple-icon.tsx`; `npm run generate-icons` renders the sizes Next can't
+  generate itself (`favicon.ico`, and the PWA manifest's `public/icons/*.png`)
+  and writes them to disk. Re-run that script after changing the design.
+  `public/sw.js` is a small hand-written service worker (network-first for
+  pages, cache-first for static assets, `/admin` always bypassed) — no build
+  plugin, so it isn't tied to webpack vs. Turbopack. It only registers in a
+  production build (`ServiceWorkerRegistration` checks `NODE_ENV`) and
+  actively unregisters itself under `next dev` — dev-mode bundle URLs aren't
+  content-hashed, so a cache-first SW left over from a previous `next start`
+  will otherwise keep serving stale JS chunks through later `next dev` runs.

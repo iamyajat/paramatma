@@ -38,7 +38,7 @@ export function SegmentBlock({ segment }: { segment: SegmentItem }) {
         <div className="min-w-0 flex-1">
           <p
             lang="sa-Deva"
-            className="whitespace-pre-line font-scripture leading-loose text-ink"
+            className="whitespace-pre-line font-scripture leading-relaxed text-ink"
             style={{ fontSize: DEV_SIZE }}
           >
             {segment.text.dev}
@@ -57,7 +57,7 @@ export function SegmentBlock({ segment }: { segment: SegmentItem }) {
             <>
               <p
                 lang="sa-Deva"
-                className="mt-3 whitespace-pre-line font-scripture leading-loose text-maroon"
+                className="mt-2 whitespace-pre-line font-scripture leading-relaxed text-maroon"
                 style={{ fontSize: DEV_SIZE }}
               >
                 {segment.mantra.dev}
@@ -75,7 +75,7 @@ export function SegmentBlock({ segment }: { segment: SegmentItem }) {
           ) : null}
 
           {segment.meaning ? (
-            <details className="meaning mt-3">
+            <details className="meaning mt-2">
               <summary className="cursor-pointer text-sm font-medium text-gold">
                 <span className="inline-flex items-center gap-1">
                   <ChevronIcon />

@@ -4,6 +4,7 @@ import { VerseDivider } from "@/components/icons/verse-divider";
 import { CONTENT_TYPES, CONTENT_TYPE_META } from "@/lib/content-types";
 import { getRecentWorks } from "@/lib/data";
 import { WorkCard } from "@/components/work-card";
+import { HomeBookmarks } from "@/components/home-bookmarks";
 
 export default async function HomePage() {
   const recentWorks = await getRecentWorks(6);
@@ -36,6 +37,8 @@ export default async function HomePage() {
           </Link>
         </div>
       </section>
+
+      <HomeBookmarks />
 
       <VerseDivider className="mb-16" />
 

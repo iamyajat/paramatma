@@ -30,6 +30,12 @@ export function SiteHeader() {
             Search
           </Link>
           <Link
+            href="/bookmarks"
+            className="hidden rounded-full px-3 py-2 text-sm text-ink-muted transition-colors hover:bg-gold-soft hover:text-ink sm:inline-block"
+          >
+            Bookmarks
+          </Link>
+          <Link
             href="/about"
             className="hidden rounded-full px-3 py-2 text-sm text-ink-muted transition-colors hover:bg-gold-soft hover:text-ink sm:inline-block"
           >
