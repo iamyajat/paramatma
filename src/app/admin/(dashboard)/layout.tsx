@@ -34,6 +34,12 @@ export default function AdminDashboardLayout({
           >
             Works
           </Link>
+          <Link
+            href="/admin/analytics"
+            className="rounded-full px-3 py-1.5 text-sm text-ink-muted hover:bg-gold-soft hover:text-ink"
+          >
+            Analytics
+          </Link>
         </nav>
         <div className="flex items-center gap-3">
           <Link href="/" className="text-sm text-ink-muted hover:text-gold">

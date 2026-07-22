@@ -22,6 +22,8 @@ export interface WorkSummary {
   deityName: { dev: string; en: string };
   description?: string;
   segmentCount: number;
+  viewCount: number;
+  shareCount: number;
   updatedAt: string;
 }
 
@@ -74,6 +76,8 @@ function toWorkSummary(doc: PopulatedWork): WorkSummary {
     deityName: { dev: deity?.name?.dev ?? "", en: deity?.name?.en ?? "" },
     description: doc.description,
     segmentCount: doc.segmentCount,
+    viewCount: doc.viewCount ?? 0,
+    shareCount: doc.shareCount ?? 0,
     updatedAt: doc.updatedAt.toISOString(),
   };
 }

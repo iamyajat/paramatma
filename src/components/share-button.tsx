@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { WorkSummary } from "@/lib/data";
+import { recordShare } from "@/lib/actions/analytics";
 
 export function ShareButton({ work }: { work: WorkSummary }) {
   const [copied, setCopied] = useState(false);
@@ -13,6 +14,7 @@ export function ShareButton({ work }: { work: WorkSummary }) {
     if (navigator.share) {
       try {
         await navigator.share({ title, url });
+        recordShare(work.id).catch((err) => console.error("recordShare failed", err));
         return;
       } catch (err) {
         if ((err as Error).name === "AbortError") return;
@@ -22,6 +24,7 @@ export function ShareButton({ work }: { work: WorkSummary }) {
     await navigator.clipboard.writeText(url);
     setCopied(true);
     window.setTimeout(() => setCopied(false), 1500);
+    recordShare(work.id).catch((err) => console.error("recordShare failed", err));
   }
 
   return (

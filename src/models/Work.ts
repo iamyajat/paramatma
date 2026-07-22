@@ -22,6 +22,8 @@ export interface WorkDoc {
   occasions: string[];
   audioUrl?: string;
   segmentCount: number;
+  viewCount: number;
+  shareCount: number;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -53,6 +55,8 @@ const WorkSchema = new Schema<WorkDoc>(
     occasions: { type: [String], default: [] },
     audioUrl: { type: String },
     segmentCount: { type: Number, default: 0 },
+    viewCount: { type: Number, default: 0 },
+    shareCount: { type: Number, default: 0 },
   },
   { timestamps: true }
 );

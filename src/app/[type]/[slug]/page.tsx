@@ -11,6 +11,8 @@ import { ReaderToolbar } from "@/components/reader-toolbar";
 import { SegmentBlock } from "@/components/segment-block";
 import { VerseDivider } from "@/components/icons/verse-divider";
 import { ReadingProgress } from "@/components/reading-progress";
+import { ViewTracker } from "@/components/view-tracker";
+import { formatCompactNumber } from "@/lib/format";
 
 export async function generateStaticParams() {
   const params = await getAllPublishedWorkParams();
@@ -100,13 +102,16 @@ export default async function ContentPage({ params }: Props) {
           <p className="mx-auto mt-4 max-w-xl text-ink-muted">{work.description}</p>
         ) : null}
         <p className="mt-3 text-xs uppercase tracking-wide text-ink-muted">
-          {segments.length} {segments.length === 1 ? "part" : "parts"}
+          {segments.length} {segments.length === 1 ? "part" : "parts"} ·{" "}
+          {formatCompactNumber(work.viewCount)} views ·{" "}
+          {formatCompactNumber(work.shareCount)} shares
         </p>
       </header>
 
       <VerseDivider className="mb-2" />
 
       <ReaderToolbar work={work} />
+      <ViewTracker workId={work.id} />
 
       <div
         id="reader-content"
