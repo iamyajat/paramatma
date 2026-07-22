@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getAllDeities, getDeityBySlug, getWorksByDeity } from "@/lib/data";
 import { WorkCard } from "@/components/work-card";
-import { BackLink } from "@/components/back-link";
 import { CONTENT_TYPES, CONTENT_TYPE_META } from "@/lib/content-types";
 
 export async function generateStaticParams() {
@@ -39,8 +38,7 @@ export default async function DeityPage({ params }: Props) {
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-16 sm:px-6">
-      <BackLink href="/deities" label="All Deities" />
-      <div className="mt-6 text-center">
+      <div className="text-center">
         <span lang="sa-Deva" className="font-scripture text-4xl text-gold">
           {deity.name.dev}
         </span>

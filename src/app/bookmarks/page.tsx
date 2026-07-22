@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { BookmarksList } from "@/components/bookmarks-list";
-import { BackLink } from "@/components/back-link";
 
 export const metadata: Metadata = {
   title: "Bookmarks",
@@ -10,8 +9,7 @@ export const metadata: Metadata = {
 export default function BookmarksPage() {
   return (
     <div className="mx-auto max-w-5xl px-4 py-16 sm:px-6">
-      <BackLink href="/" label="Home" />
-      <div className="mt-6 text-center">
+      <div className="text-center">
         <h1 className="font-display text-3xl font-semibold text-ink">
           Bookmarks
         </h1>
