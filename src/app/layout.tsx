@@ -25,6 +25,7 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
+  viewportFit: "cover",
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#fbf7ef" },
     { media: "(prefers-color-scheme: dark)", color: "#1b1713" },
@@ -53,7 +54,10 @@ export default function RootLayout({
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
       </head>
-      <body className="flex min-h-screen flex-col antialiased pb-16 sm:pb-0" suppressHydrationWarning>
+      <body
+        className="flex min-h-screen flex-col antialiased pb-[calc(4rem_+_env(safe-area-inset-bottom))] sm:pb-0"
+        suppressHydrationWarning
+      >
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-full focus:bg-maroon focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-white"

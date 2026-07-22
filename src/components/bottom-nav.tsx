@@ -64,7 +64,7 @@ export function BottomNav() {
             onClick={() => setMoreOpen(false)}
             className="fixed inset-0 z-40 bg-ink/20"
           />
-          <div className="fixed inset-x-3 bottom-[4.75rem] z-50 rounded-2xl border border-border bg-ivory p-2 shadow-lifted">
+          <div className="fixed inset-x-3 bottom-[calc(4.75rem_+_env(safe-area-inset-bottom))] z-50 rounded-2xl border border-border bg-ivory p-2 shadow-lifted">
             <Link
               href="/about"
               onClick={closeMore}
@@ -85,7 +85,7 @@ export function BottomNav() {
 
       <nav
         aria-label="Primary"
-        className="fixed inset-x-0 bottom-0 z-50 flex border-t border-border bg-ivory/95 backdrop-blur supports-[backdrop-filter]:bg-ivory/80"
+        className="fixed inset-x-0 bottom-0 z-50 flex border-t border-border bg-ivory/95 pb-[env(safe-area-inset-bottom)] backdrop-blur supports-[backdrop-filter]:bg-ivory/80"
       >
         {NAV_ITEMS.map(({ href, label, Icon }) => {
           const active = isActivePath(pathname, href) && !moreOpen;
