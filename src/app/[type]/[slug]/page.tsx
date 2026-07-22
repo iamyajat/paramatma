@@ -8,6 +8,7 @@ import {
 } from "@/lib/data";
 import { CONTENT_TYPE_META, isContentType } from "@/lib/content-types";
 import { ReaderToolbar } from "@/components/reader-toolbar";
+import { BackLink } from "@/components/back-link";
 import { SegmentBlock } from "@/components/segment-block";
 import { VerseDivider } from "@/components/icons/verse-divider";
 import { ReadingProgress } from "@/components/reading-progress";
@@ -81,7 +82,11 @@ export default async function ContentPage({ params }: Props) {
       />
       <ReadingProgress />
 
-      <header className="mx-auto max-w-3xl px-4 pt-14 pb-6 text-center sm:px-6">
+      <div className="mx-auto max-w-3xl px-4 pt-8 sm:px-6">
+        <BackLink href={`/${work.type}`} label={`All ${meta.plural}`} />
+      </div>
+
+      <header className="mx-auto max-w-3xl px-4 pt-6 pb-6 text-center sm:px-6">
         <div className="flex items-center justify-center gap-2 text-sm text-ink-muted">
           <Link href={`/${work.type}`} className="hover:text-gold">
             {meta.label}

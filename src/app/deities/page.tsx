@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getAllDeities } from "@/lib/data";
 import { DeityCard } from "@/components/deity-card";
+import { BackLink } from "@/components/back-link";
 
 export const metadata: Metadata = {
   title: "Deities",
@@ -13,7 +14,8 @@ export default async function DeitiesPage() {
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-16 sm:px-6">
-      <div className="text-center">
+      <BackLink href="/" label="Home" />
+      <div className="mt-6 text-center">
         <h1 className="font-display text-3xl font-semibold text-ink">
           Browse by Deity
         </h1>

@@ -3,6 +3,7 @@ import "./globals.css";
 import { fontVariables } from "@/lib/fonts";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { BottomNav } from "@/components/bottom-nav";
 import { ServiceWorkerRegistration } from "@/components/service-worker-registration";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
@@ -52,7 +53,7 @@ export default function RootLayout({
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
       </head>
-      <body className="flex min-h-screen flex-col antialiased" suppressHydrationWarning>
+      <body className="flex min-h-screen flex-col antialiased pb-16 sm:pb-0" suppressHydrationWarning>
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-full focus:bg-maroon focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-white"
@@ -64,6 +65,7 @@ export default function RootLayout({
           {children}
         </main>
         <SiteFooter />
+        <BottomNav />
         <ServiceWorkerRegistration />
       </body>
     </html>

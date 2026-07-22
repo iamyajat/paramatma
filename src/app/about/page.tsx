@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { OmMark } from "@/components/icons/om-mark";
+import { BackLink } from "@/components/back-link";
 
 export const metadata: Metadata = {
   title: "About",
@@ -10,7 +11,8 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <div className="mx-auto max-w-2xl px-4 py-16 sm:px-6">
-      <div className="text-center">
+      <BackLink href="/" label="Home" />
+      <div className="mt-6 text-center">
         <OmMark className="text-4xl text-gold" />
         <h1 className="mt-3 font-display text-3xl font-semibold text-ink">
           About{" "}

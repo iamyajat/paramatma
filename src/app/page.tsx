@@ -2,12 +2,15 @@ import Link from "next/link";
 import { OmMark } from "@/components/icons/om-mark";
 import { VerseDivider } from "@/components/icons/verse-divider";
 import { CONTENT_TYPES, CONTENT_TYPE_META } from "@/lib/content-types";
-import { getRecentWorks } from "@/lib/data";
-import { WorkCard } from "@/components/work-card";
+import { getAllDeities } from "@/lib/data";
+import { DeityCard } from "@/components/deity-card";
 import { HomeBookmarks } from "@/components/home-bookmarks";
+import { SearchBar } from "@/components/search-bar";
+
+const HOMEPAGE_DEITY_LIMIT = 8;
 
 export default async function HomePage() {
-  const recentWorks = await getRecentWorks(6);
+  const deities = await getAllDeities();
 
   return (
     <div>
@@ -22,19 +25,8 @@ export default async function HomePage() {
           A quiet home for the names, hymns, and prayers of the Hindu tradition —
           offered here for reading, recitation, and remembrance.
         </p>
-        <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-          <Link
-            href="/deities"
-            className="rounded-full bg-maroon px-6 py-3 text-sm font-medium text-white shadow-soft transition-transform hover:scale-[1.02]"
-          >
-            Browse by Deity
-          </Link>
-          <Link
-            href="/search"
-            className="rounded-full border border-border px-6 py-3 text-sm font-medium text-ink transition-colors hover:border-gold hover:text-gold"
-          >
-            Search Scriptures
-          </Link>
+        <div className="mt-8">
+          <SearchBar autoFocus size="lg" />
         </div>
       </section>
 
@@ -71,18 +63,25 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {recentWorks.length > 0 ? (
+      {deities.length > 0 ? (
         <>
           <VerseDivider className="mb-16" />
           <section className="mx-auto max-w-5xl px-4 pb-24 sm:px-6">
             <h2 className="text-center font-display text-2xl font-semibold text-ink">
-              Recently Added
+              Explore by Deity
             </h2>
-            <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {recentWorks.map((work) => (
-                <WorkCard key={work.id} work={work} />
+            <div className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+              {deities.slice(0, HOMEPAGE_DEITY_LIMIT).map((deity) => (
+                <DeityCard key={deity.id} deity={deity} />
               ))}
             </div>
+            {deities.length > HOMEPAGE_DEITY_LIMIT ? (
+              <p className="mt-8 text-center">
+                <Link href="/deities" className="text-sm text-maroon hover:underline">
+                  View all {deities.length} deities →
+                </Link>
+              </p>
+            ) : null}
           </section>
         </>
       ) : null}

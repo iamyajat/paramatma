@@ -1,8 +1,14 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { OmMark } from "@/components/icons/om-mark";
+import { NAV_ITEMS, isActivePath } from "@/components/nav-items";
 
 export function SiteHeader() {
+  const pathname = usePathname();
+
   return (
     <header className="no-print sticky top-0 z-40 border-b border-border/80 bg-ivory/90 backdrop-blur supports-[backdrop-filter]:bg-ivory/75">
       <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-4 sm:px-6">
@@ -16,35 +22,46 @@ export function SiteHeader() {
           </span>
         </Link>
 
-        <nav className="flex items-center gap-1 sm:gap-2">
-          <Link
-            href="/deities"
-            className="rounded-full px-3 py-2 text-sm text-ink-muted transition-colors hover:bg-gold-soft hover:text-ink"
-          >
-            Deities
-          </Link>
-          <Link
-            href="/search"
-            className="rounded-full px-3 py-2 text-sm text-ink-muted transition-colors hover:bg-gold-soft hover:text-ink"
-          >
-            Search
-          </Link>
-          <Link
-            href="/bookmarks"
-            className="hidden rounded-full px-3 py-2 text-sm text-ink-muted transition-colors hover:bg-gold-soft hover:text-ink sm:inline-block"
-          >
-            Bookmarks
-          </Link>
+        {/* Desktop navigation — the bottom bar covers small screens. */}
+        <nav className="hidden items-center gap-1 sm:flex">
+          {NAV_ITEMS.map(({ href, label, Icon }) => {
+            const active = isActivePath(pathname, href);
+            return (
+              <Link
+                key={href}
+                href={href}
+                aria-current={active ? "page" : undefined}
+                className={`flex items-center gap-2 rounded-full px-4 py-2.5 text-base transition-colors ${
+                  active
+                    ? "bg-gold-soft font-medium text-ink"
+                    : "text-ink-muted hover:bg-gold-soft hover:text-ink"
+                }`}
+              >
+                <Icon className="h-5 w-5" />
+                {label}
+              </Link>
+            );
+          })}
           <Link
             href="/about"
-            className="hidden rounded-full px-3 py-2 text-sm text-ink-muted transition-colors hover:bg-gold-soft hover:text-ink sm:inline-block"
+            aria-current={isActivePath(pathname, "/about") ? "page" : undefined}
+            className={`rounded-full px-4 py-2.5 text-base transition-colors ${
+              isActivePath(pathname, "/about")
+                ? "bg-gold-soft font-medium text-ink"
+                : "text-ink-muted hover:bg-gold-soft hover:text-ink"
+            }`}
           >
             About
           </Link>
-          <div className="ml-1 sm:ml-2">
+          <div className="ml-2">
             <ThemeToggle />
           </div>
         </nav>
+
+        {/* On mobile, only the theme toggle lives up here; links are in the bottom bar. */}
+        <div className="sm:hidden">
+          <ThemeToggle />
+        </div>
       </div>
     </header>
   );

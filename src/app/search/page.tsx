@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { getAllDeities, searchWorks } from "@/lib/data";
 import { WorkCard } from "@/components/work-card";
+import { BackLink } from "@/components/back-link";
+import { SearchBar } from "@/components/search-bar";
 import { CONTENT_TYPES, CONTENT_TYPE_META } from "@/lib/content-types";
 
 export const metadata: Metadata = {
@@ -21,48 +23,17 @@ export default async function SearchPage({ searchParams }: Props) {
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-16 sm:px-6">
-      <div className="text-center">
+      <BackLink href="/" label="Home" />
+      <div className="mt-6 text-center">
         <h1 className="font-display text-3xl font-semibold text-ink">Search</h1>
         <p className="mt-2 text-ink-muted">
           Find names, aartis, bhajans, stotras, and sahasranamas.
         </p>
       </div>
 
-      <form method="get" className="mx-auto mt-8 max-w-lg">
-        <label htmlFor="q" className="sr-only">
-          Search
-        </label>
-        <div className="flex items-center gap-2">
-          <div className="relative flex-1">
-            <svg
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-              className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-ink-muted"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <circle cx="11" cy="11" r="7" />
-              <path strokeLinecap="round" d="m20 20-3.5-3.5" />
-            </svg>
-            <input
-              id="q"
-              name="q"
-              type="search"
-              defaultValue={query}
-              placeholder="Try “Ganesha”, “aarti”, or a deity name…"
-              autoFocus
-              className="w-full rounded-full border border-border bg-surface py-2.5 pl-10 pr-4 text-ink outline-none focus:border-gold"
-            />
-          </div>
-          <button
-            type="submit"
-            className="shrink-0 rounded-full bg-maroon px-5 py-2.5 text-sm font-medium text-white"
-          >
-            Search
-          </button>
-        </div>
-      </form>
+      <div className="mt-8">
+        <SearchBar autoFocus defaultValue={query} />
+      </div>
 
       <div className="mt-12">
         {!query ? (
