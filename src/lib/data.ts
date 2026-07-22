@@ -217,6 +217,18 @@ export const searchWorks = cache(async (query: string): Promise<WorkSummary[]> =
   return docs.map(toWorkSummary);
 });
 
+export const getWorkSummariesBySlugs = cache(
+  async (slugs: string[]): Promise<WorkSummary[]> => {
+    const unique = Array.from(new Set(slugs.filter(Boolean)));
+    if (unique.length === 0) return [];
+    await connectToDatabase();
+    const docs = await Work.find({ slug: { $in: unique }, status: "published" })
+      .populate("deity", "name slug")
+      .lean<PopulatedWork[]>();
+    return docs.map(toWorkSummary);
+  }
+);
+
 export const getAllPublishedWorkParams = cache(
   async (): Promise<{ type: ContentType; slug: string }[]> => {
     await connectToDatabase();

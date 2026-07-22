@@ -10,6 +10,7 @@
     "seed": "tsx scripts/seed.ts",
     "ingest": "tsx scripts/ingest.ts",
     "ingest2": "tsx scripts/ingest2.ts",
+    "ingest3": "tsx scripts/ingest3.ts",
     "generate-icons": "tsx scripts/generate-icons.ts"
   },
   "dependencies": {

@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useSyncExternalStore } from "react";
 import type { WorkSummary } from "@/lib/data";
-import { BookmarkToggle } from "@/components/bookmark-toggle";
+import { SaveToggle } from "@/components/save-toggle";
 import { ShareButton } from "@/components/share-button";
 import { ReaderMoreMenu } from "@/components/reader-more-menu";
 
@@ -120,7 +120,7 @@ export function ReaderToolbar({ work }: { work: WorkSummary }) {
       </button>
 
       <div className="ml-auto flex items-center gap-2">
-        <BookmarkToggle work={work} />
+        <SaveToggle work={work} />
         <ShareButton work={work} />
         <ReaderMoreMenu
           meaningsExpanded={meaningsExpanded}

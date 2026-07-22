@@ -4,7 +4,7 @@ import { VerseDivider } from "@/components/icons/verse-divider";
 import { CONTENT_TYPES, CONTENT_TYPE_META } from "@/lib/content-types";
 import { getAllDeities } from "@/lib/data";
 import { DeityCard } from "@/components/deity-card";
-import { HomeBookmarks } from "@/components/home-bookmarks";
+import { HomeSaves } from "@/components/home-saves";
 import { SearchBar } from "@/components/search-bar";
 
 const HOMEPAGE_DEITY_LIMIT = 8;
@@ -30,7 +30,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <HomeBookmarks />
+      <HomeSaves />
 
       <VerseDivider className="mb-16" />
 

@@ -2,24 +2,24 @@
 
 import { useSyncExternalStore } from "react";
 import type { WorkSummary } from "@/lib/data";
-import { subscribe, isBookmarkedSnapshot, toggleBookmark } from "@/lib/bookmarks";
+import { subscribe, isSavedSnapshot, toggleSave } from "@/lib/saves";
 
-export function BookmarkToggle({ work }: { work: WorkSummary }) {
-  const bookmarked = useSyncExternalStore(
+export function SaveToggle({ work }: { work: WorkSummary }) {
+  const saved = useSyncExternalStore(
     subscribe,
-    () => isBookmarkedSnapshot(work.id),
+    () => isSavedSnapshot(work.id),
     () => false
   );
 
   return (
     <button
       type="button"
-      onClick={() => toggleBookmark(work)}
-      aria-pressed={bookmarked}
-      aria-label={bookmarked ? "Remove bookmark" : "Bookmark this page"}
-      title={bookmarked ? "Remove bookmark" : "Bookmark this page"}
+      onClick={() => toggleSave(work)}
+      aria-pressed={saved}
+      aria-label={saved ? "Remove from saves" : "Save this page"}
+      title={saved ? "Remove from saves" : "Save this page"}
       className={`flex h-8 w-8 items-center justify-center rounded-full border transition-colors ${
-        bookmarked
+        saved
           ? "border-gold bg-gold-soft text-gold"
           : "border-border text-ink-muted hover:border-gold hover:text-gold"
       }`}
@@ -27,7 +27,7 @@ export function BookmarkToggle({ work }: { work: WorkSummary }) {
       <svg
         viewBox="0 0 24 24"
         className="h-4 w-4"
-        fill={bookmarked ? "currentColor" : "none"}
+        fill={saved ? "currentColor" : "none"}
         stroke="currentColor"
         strokeWidth="1.8"
         strokeLinejoin="round"

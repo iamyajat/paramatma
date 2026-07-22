@@ -45,7 +45,7 @@ export function SearchIcon({ className }: { className?: string }) {
   );
 }
 
-export function BookmarkIcon({ className }: { className?: string }) {
+export function SaveIcon({ className }: { className?: string }) {
   return (
     <svg {...baseProps(className)}>
       <path d="M6 4h12v16l-6-4-6 4V4Z" />
@@ -64,7 +64,7 @@ export const NAV_ITEMS: NavItem[] = [
   { href: "/", label: "Home", Icon: HomeIcon },
   { href: "/deities", label: "Deities", Icon: DeityIcon },
   { href: "/search", label: "Search", Icon: SearchIcon },
-  { href: "/bookmarks", label: "Saved", Icon: BookmarkIcon },
+  { href: "/saved", label: "Saved", Icon: SaveIcon },
 ];
 
 /** Whether `pathname` should mark `href` as the active nav item. */
