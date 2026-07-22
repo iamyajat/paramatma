@@ -3,6 +3,8 @@
 import { useEffect, useState, useSyncExternalStore } from "react";
 import type { WorkSummary } from "@/lib/data";
 import { BookmarkToggle } from "@/components/bookmark-toggle";
+import { ShareButton } from "@/components/share-button";
+import { ReaderMoreMenu } from "@/components/reader-more-menu";
 
 const SCALE_STEPS = [0.875, 1, 1.125, 1.25, 1.375];
 const SCALE_KEY = "reader:scale";
@@ -117,33 +119,17 @@ export function ReaderToolbar({ work }: { work: WorkSummary }) {
         Pronunciation
       </button>
 
-      {/* <button
-        type="button"
-        onClick={() => {
-          const next = !meaningsExpanded;
-          setAllMeanings(next);
-          setMeaningsExpanded(next);
-        }}
-        aria-pressed={meaningsExpanded}
-        className={`rounded-full border px-3 py-1.5 text-xs font-medium transition-colors ${
-          meaningsExpanded
-            ? "border-gold bg-gold-soft text-ink"
-            : "border-border text-ink-muted hover:border-gold hover:text-gold"
-        }`}
-      >
-        {meaningsExpanded ? "Collapse meanings" : "Expand meanings"}
-      </button> */}
-
       <div className="ml-auto flex items-center gap-2">
         <BookmarkToggle work={work} />
-        <button
-          type="button"
-          onClick={() => window.print()}
-          aria-label="Print this page"
-          className="rounded-full border border-border px-3 py-1.5 text-xs font-medium text-ink-muted hover:border-gold hover:text-gold"
-        >
-          Print
-        </button>
+        <ShareButton work={work} />
+        <ReaderMoreMenu
+          meaningsExpanded={meaningsExpanded}
+          onToggleMeanings={() => {
+            const next = !meaningsExpanded;
+            setAllMeanings(next);
+            setMeaningsExpanded(next);
+          }}
+        />
       </div>
     </div>
   );

@@ -8,7 +8,11 @@ export default function manifest(): MetadataRoute.Manifest {
     description:
       "A quiet, readable home for Hindu scriptures — 108 names, aartis, bhajans, stotras, and sahasranamas in Devanagari with pronunciation and meaning.",
     start_url: "/",
+    scope: "/",
     display: "standalone",
+    launch_handler: {
+      client_mode: "navigate-existing",
+    },
     background_color: "#fbf7ef",
     theme_color: "#7a2e2e",
     icons: [
