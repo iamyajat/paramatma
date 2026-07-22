@@ -42,7 +42,7 @@ function InfoIcon({ className }: { className?: string }) {
 }
 
 const tabClass = (active: boolean) =>
-  `flex h-16 flex-1 flex-col items-center justify-center gap-1 text-xs transition-colors ${
+  `flex h-14 flex-1 flex-col items-center justify-center gap-0.5 text-xs transition-colors ${
     active ? "text-gold" : "text-ink-muted"
   }`;
 
@@ -64,7 +64,7 @@ export function BottomNav() {
             onClick={() => setMoreOpen(false)}
             className="fixed inset-0 z-40 bg-ink/20"
           />
-          <div className="fixed inset-x-3 bottom-[calc(4.75rem_+_env(safe-area-inset-bottom))] z-50 rounded-2xl border border-border bg-ivory p-2 shadow-lifted">
+          <div className="fixed inset-x-3 bottom-[calc(4.25rem_+_env(safe-area-inset-bottom))] z-50 rounded-2xl border border-border bg-ivory p-2 shadow-lifted">
             <Link
               href="/about"
               onClick={closeMore}
@@ -97,7 +97,7 @@ export function BottomNav() {
               aria-current={active ? "page" : undefined}
               className={tabClass(active)}
             >
-              <Icon className="h-6 w-6" />
+              <Icon className="h-5 w-5" />
               {label}
             </Link>
           );
@@ -108,7 +108,7 @@ export function BottomNav() {
           aria-expanded={moreOpen}
           className={tabClass(moreOpen)}
         >
-          <MoreIcon className="h-6 w-6" />
+          <MoreIcon className="h-5 w-5" />
           More
         </button>
       </nav>

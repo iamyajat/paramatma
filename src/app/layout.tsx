@@ -55,7 +55,7 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
       </head>
       <body
-        className="flex min-h-screen flex-col antialiased pb-[calc(4rem_+_env(safe-area-inset-bottom))] sm:pb-0"
+        className="flex min-h-screen flex-col antialiased pb-[calc(3.5rem_+_env(safe-area-inset-bottom))] sm:pb-0"
         suppressHydrationWarning
       >
         <a
