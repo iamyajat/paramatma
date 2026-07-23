@@ -9,6 +9,7 @@ import {
 import { CONTENT_TYPE_META, isContentType } from "@/lib/content-types";
 import { ReaderToolbar } from "@/components/reader-toolbar";
 import { SegmentBlock } from "@/components/segment-block";
+import { VerseAudioPlayer } from "@/components/verse-audio-player";
 import { VerseDivider } from "@/components/icons/verse-divider";
 import { ReadingProgress } from "@/components/reading-progress";
 import { ViewTracker } from "@/components/view-tracker";
@@ -111,7 +112,7 @@ export default async function ContentPage({ params }: Props) {
 
       <VerseDivider className="mb-2" />
 
-      <ReaderToolbar work={work} hasAudio={hasAudio} />
+      <ReaderToolbar work={work} />
       <ViewTracker workId={work.id} />
 
       <div
@@ -151,6 +152,14 @@ export default async function ContentPage({ params }: Props) {
       ) : (
         <div className="pb-16" />
       )}
+
+      {hasAudio ? (
+        <>
+          {/* Spacer so the last verse clears the fixed player bar. */}
+          <div aria-hidden className="h-28" />
+          <VerseAudioPlayer title={`${work.title.en} · ${work.title.dev}`} />
+        </>
+      ) : null}
     </div>
   );
 }

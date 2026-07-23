@@ -26,9 +26,9 @@ export function VerseAudioButton({
   const status = isActive ? audio.status : "idle";
 
   useEffect(() => {
-    register(order, src, anchor);
+    register(order, src, anchor, number);
     return () => unregister(order, src);
-  }, [order, src, anchor]);
+  }, [order, src, anchor, number]);
 
   const isPlaying = status === "playing";
   const isLoading = status === "loading";
