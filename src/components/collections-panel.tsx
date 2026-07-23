@@ -93,8 +93,8 @@ export function CollectionsPanel({
               <SaveCard
                 key={s.id}
                 save={s}
-                collections={collections}
                 saves={saves}
+                collections={collections}
                 collectionId={openCollection.id}
               />
             ))}

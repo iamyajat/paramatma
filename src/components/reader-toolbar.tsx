@@ -123,6 +123,7 @@ export function ReaderToolbar({ work }: { work: WorkSummary }) {
         <SaveToggle work={work} />
         <ShareButton work={work} />
         <ReaderMoreMenu
+          work={work}
           meaningsExpanded={meaningsExpanded}
           onToggleMeanings={() => {
             const next = !meaningsExpanded;

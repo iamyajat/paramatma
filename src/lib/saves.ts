@@ -152,6 +152,20 @@ export function removeSave(id: string) {
   writeSaves(readSaves().filter((s) => s.id !== id));
 }
 
+/**
+ * Get the existing save for a work, or create one (with no collections yet)
+ * if it isn't saved. Used when assigning a collection from a context — like
+ * the reader's more-menu — where the work may not be saved yet.
+ */
+export function ensureSaved(work: WorkSummary): Save {
+  const existing = readSaves();
+  const found = existing.find((s) => s.id === work.id);
+  if (found) return found;
+  const created: Save = { ...work, savedAt: new Date().toISOString(), collectionIds: [] };
+  writeSaves([...existing, created]);
+  return created;
+}
+
 // --- collection mutations ----------------------------------------------------
 
 function sanitizeName(name: string): string {
