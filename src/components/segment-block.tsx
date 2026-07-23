@@ -1,5 +1,6 @@
 import type { SegmentItem } from "@/lib/data";
 import { VerseActions } from "@/components/verse-actions";
+import { VerseAudioButton } from "@/components/verse-audio-button";
 
 const DEV_SIZE = "calc(1.5rem * var(--reader-scale, 1))";
 const PRONUNCIATION_SIZE = "calc(1rem * var(--reader-scale, 1))";
@@ -86,6 +87,18 @@ export function SegmentBlock({ segment }: { segment: SegmentItem }) {
                 {segment.meaning}
               </p>
             </details>
+          ) : null}
+
+          {segment.audioUrl ? (
+            <div className="mt-2 flex items-center gap-2">
+              <VerseAudioButton
+                src={segment.audioUrl}
+                order={segment.order}
+                anchor={anchor}
+                number={segment.number ?? segment.order + 1}
+              />
+              <span className="text-xs text-ink-muted">Listen</span>
+            </div>
           ) : null}
         </div>
 

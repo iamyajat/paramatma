@@ -21,6 +21,9 @@ export interface WorkDoc {
   tags: string[];
   occasions: string[];
   audioUrl?: string;
+  // Explicit display order within a type (e.g. Gita chapter number 1–18).
+  // Absent for types that sort alphabetically by title.
+  order?: number;
   segmentCount: number;
   viewCount: number;
   shareCount: number;
@@ -54,6 +57,7 @@ const WorkSchema = new Schema<WorkDoc>(
     tags: { type: [String], default: [] },
     occasions: { type: [String], default: [] },
     audioUrl: { type: String },
+    order: { type: Number },
     segmentCount: { type: Number, default: 0 },
     viewCount: { type: Number, default: 0 },
     shareCount: { type: Number, default: 0 },

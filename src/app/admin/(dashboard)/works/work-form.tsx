@@ -44,6 +44,14 @@ Nirvighnam Kuru Me Deva Sarva-kaaryeshu Sarvada`,
     placeholder: `शान्ताकारं भुजगशयनं पद्मनाभं सुरेशं...
 Shantakaram Bhujagashayanam Padmanabham Suresham...`,
   },
+  gita: {
+    hint:
+      "Managed by scripts/ingest-gita.ts (one chapter per Work). Warning: saving here rebuilds segments from this text and DROPS each verse's meaning and recitation audio — re-run `npm run ingest-gita -- --load` to restore.",
+    placeholder: `कर्मण्येवाधिकारस्ते मा फलेषु कदाचन।
+मा कर्मफलहेतुर्भूर्मा ते सङ्गोऽस्त्वकर्मणि।।2.47।।
+karmaṇyevādhikāraste mā phaleṣu kadācana,
+mā karmaphalaheturbhūrmā te saṅgo'stvakarmaṇi.`,
+  },
 };
 
 export interface WorkFormInitial {

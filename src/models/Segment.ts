@@ -23,6 +23,8 @@ export interface SegmentDoc {
   text: SegmentText;
   mantra?: SegmentText;
   meaning?: string;
+  // Per-verse audio recitation URL (e.g. Gita shloka chanting, hotlinked).
+  audioUrl?: string;
   embedding?: number[];
   embeddingText?: string;
   embeddedAt?: Date;
@@ -54,6 +56,7 @@ const SegmentSchema = new Schema<SegmentDoc>(
     text: { type: SegmentTextSchema, required: true },
     mantra: { type: SegmentTextSchema },
     meaning: { type: String },
+    audioUrl: { type: String },
     // Reserved for future Atlas Vector Search; excluded from default queries.
     embedding: { type: [Number], default: undefined, select: false },
     embeddingText: { type: String, select: false },

@@ -51,6 +51,7 @@ export interface SegmentItem {
   text: { dev: string; en?: string };
   mantra?: { dev: string; en?: string };
   meaning?: string;
+  audioUrl?: string;
 }
 
 function toDeityListItem(doc: DeityDoc): DeityListItem {
@@ -107,6 +108,7 @@ function toSegmentItem(doc: {
   text: { dev: string; en?: string };
   mantra?: { dev: string; en?: string };
   meaning?: string;
+  audioUrl?: string;
 }): SegmentItem {
   return {
     id: doc._id.toString(),
@@ -116,6 +118,7 @@ function toSegmentItem(doc: {
     text: { dev: doc.text.dev, en: doc.text.en },
     mantra: doc.mantra ? { dev: doc.mantra.dev, en: doc.mantra.en } : undefined,
     meaning: doc.meaning,
+    audioUrl: doc.audioUrl,
   };
 }
 
@@ -139,7 +142,7 @@ export const getWorksByDeity = cache(
     const filter: Record<string, unknown> = { deitySlug };
     if (opts.onlyPublished !== false) filter.status = "published";
     const docs = await Work.find(filter)
-      .sort({ type: 1, "title.en": 1 })
+      .sort({ type: 1, order: 1, "title.en": 1 })
       .populate("deity", "name slug")
       .lean<PopulatedWork[]>();
     return docs.map(toWorkSummary);
@@ -155,7 +158,7 @@ export const getWorksByType = cache(
     const filter: Record<string, unknown> = { type };
     if (opts.onlyPublished !== false) filter.status = "published";
     let query = Work.find(filter)
-      .sort({ "title.en": 1 })
+      .sort({ order: 1, "title.en": 1 })
       .populate("deity", "name slug");
     if (opts.limit) query = query.limit(opts.limit);
     const docs = await query.lean<PopulatedWork[]>();

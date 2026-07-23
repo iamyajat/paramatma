@@ -1,9 +1,13 @@
+// APPEND ONLY: collection-share.ts encodes a work's type as its index into this
+// array inside shareable link tokens. Reordering or inserting would silently
+// break every previously shared collection link — always add new types at the end.
 export const CONTENT_TYPES = [
   "ashtottara",
   "aarti",
   "bhajan",
   "stotra",
   "sahasranama",
+  "gita",
 ] as const;
 
 export type ContentType = (typeof CONTENT_TYPES)[number];
@@ -45,5 +49,11 @@ export const CONTENT_TYPE_META: Record<
     plural: "Sahasranamas",
     devanagari: "सहस्रनाम",
     description: "1,000 sacred names",
+  },
+  gita: {
+    label: "Bhagavad Gita",
+    plural: "Bhagavad Gita",
+    devanagari: "भगवद्गीता",
+    description: "The Song of the Lord — 18 chapters, 700 verses",
   },
 };
