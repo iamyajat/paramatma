@@ -33,12 +33,15 @@ export function VerseAudioButton({
   const isPlaying = status === "playing";
   const isLoading = status === "loading";
   const isError = status === "error";
+  const isPaused = status === "paused";
 
   const label = isPlaying
     ? `Pause recitation of verse ${number}`
     : isError
       ? `Recitation of verse ${number} failed — tap to retry`
-      : `Play recitation of verse ${number}`;
+      : isPaused
+        ? `Resume recitation of verse ${number}`
+        : `Play recitation of verse ${number}`;
 
   return (
     <button

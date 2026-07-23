@@ -117,6 +117,20 @@
   display: none;
 }
 
+/* Subtle highlight on the verse currently being recited (toggled imperatively
+   by the audio controller). A soft tint plus a gold left-accent. The box is
+   pulled outward into the reader's horizontal gutter (negative margin offset by
+   equal padding) so the accent bar sits clear of the verse number rather than
+   overlapping it, and content stays put. */
+#reader-content [data-verse-active] {
+  background-color: color-mix(in oklab, var(--color-gold-soft) 55%, transparent);
+  box-shadow: inset 3px 0 0 0 var(--color-gold);
+  border-radius: 0.375rem;
+  margin-inline: -0.75rem;
+  padding-inline: 0.75rem;
+  transition: background-color 0.35s ease, box-shadow 0.35s ease;
+}
+
 /* Suppress the native <summary> disclosure marker in both the modern
    (::marker) and WebKit-legacy (::-webkit-details-marker) forms — browsers
    disagree on which one they render, and leaving only one hidden shows a

@@ -59,6 +59,7 @@ export default async function ContentPage({ params }: Props) {
 
   const segments = await getSegmentsForWork(work.id);
   const meta = CONTENT_TYPE_META[work.type];
+  const hasAudio = segments.some((s) => Boolean(s.audioUrl));
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -110,7 +111,7 @@ export default async function ContentPage({ params }: Props) {
 
       <VerseDivider className="mb-2" />
 
-      <ReaderToolbar work={work} />
+      <ReaderToolbar work={work} hasAudio={hasAudio} />
       <ViewTracker workId={work.id} />
 
       <div

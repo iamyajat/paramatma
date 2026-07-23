@@ -75,6 +75,18 @@ export function SegmentBlock({ segment }: { segment: SegmentItem }) {
             </>
           ) : null}
 
+          {segment.audioUrl ? (
+            <div className="mt-2 flex items-center gap-2">
+              <VerseAudioButton
+                src={segment.audioUrl}
+                order={segment.order}
+                anchor={anchor}
+                number={segment.number ?? segment.order + 1}
+              />
+              <span className="text-xs text-ink-muted">Listen</span>
+            </div>
+          ) : null}
+
           {segment.meaning ? (
             <details className="meaning mt-2">
               <summary className="cursor-pointer text-sm font-medium text-gold">
@@ -87,18 +99,6 @@ export function SegmentBlock({ segment }: { segment: SegmentItem }) {
                 {segment.meaning}
               </p>
             </details>
-          ) : null}
-
-          {segment.audioUrl ? (
-            <div className="mt-2 flex items-center gap-2">
-              <VerseAudioButton
-                src={segment.audioUrl}
-                order={segment.order}
-                anchor={anchor}
-                number={segment.number ?? segment.order + 1}
-              />
-              <span className="text-xs text-ink-muted">Listen</span>
-            </div>
           ) : null}
         </div>
 

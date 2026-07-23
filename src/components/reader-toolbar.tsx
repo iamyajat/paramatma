@@ -5,6 +5,12 @@ import type { WorkSummary } from "@/lib/data";
 import { SaveToggle } from "@/components/save-toggle";
 import { ShareButton } from "@/components/share-button";
 import { ReaderMoreMenu } from "@/components/reader-more-menu";
+import {
+  subscribe as subscribeAudio,
+  getState as getAudioState,
+  getServerState as getAudioServerState,
+  togglePlayAll,
+} from "@/lib/verse-audio";
 
 const SCALE_STEPS = [0.875, 1, 1.125, 1.25, 1.375];
 const SCALE_KEY = "reader:scale";
@@ -61,7 +67,13 @@ function setAllMeanings(expand: boolean) {
   details.forEach((d) => (d.open = expand));
 }
 
-export function ReaderToolbar({ work }: { work: WorkSummary }) {
+export function ReaderToolbar({
+  work,
+  hasAudio = false,
+}: {
+  work: WorkSummary;
+  hasAudio?: boolean;
+}) {
   const [meaningsExpanded, setMeaningsExpanded] = useState(false);
   const scaleIndex = useSyncExternalStore(subscribe, getScaleIndex, getScaleServerSnapshot);
   const pronunciationOn = useSyncExternalStore(
@@ -69,6 +81,8 @@ export function ReaderToolbar({ work }: { work: WorkSummary }) {
     getPronunciationOn,
     getPronunciationServerSnapshot
   );
+  const audio = useSyncExternalStore(subscribeAudio, getAudioState, getAudioServerState);
+  const audioSounding = audio.status === "playing" || audio.status === "loading";
 
   // Restore persisted preferences onto the content element once on mount.
   useEffect(() => {
@@ -119,6 +133,22 @@ export function ReaderToolbar({ work }: { work: WorkSummary }) {
         Pronunciation
       </button>
 
+      {hasAudio ? (
+        <button
+          type="button"
+          onClick={togglePlayAll}
+          aria-label={audioSounding ? "Pause recitation" : "Play all verses"}
+          className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-medium transition-colors ${
+            audioSounding || audio.status === "paused"
+              ? "border-gold bg-gold-soft text-ink"
+              : "border-border text-ink-muted hover:border-gold hover:text-gold"
+          }`}
+        >
+          {audioSounding ? <PauseGlyph /> : <PlayGlyph />}
+          {audioSounding ? "Pause" : audio.status === "paused" ? "Resume" : "Play all"}
+        </button>
+      ) : null}
+
       <div className="ml-auto flex items-center gap-2">
         <SaveToggle work={work} />
         <ShareButton work={work} />
@@ -133,5 +163,22 @@ export function ReaderToolbar({ work }: { work: WorkSummary }) {
         />
       </div>
     </div>
+  );
+}
+
+function PlayGlyph() {
+  return (
+    <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="currentColor" aria-hidden="true">
+      <path d="M8 5.14v13.72a.5.5 0 0 0 .77.42l10.28-6.86a.5.5 0 0 0 0-.84L8.77 4.72a.5.5 0 0 0-.77.42Z" />
+    </svg>
+  );
+}
+
+function PauseGlyph() {
+  return (
+    <svg viewBox="0 0 24 24" className="h-3.5 w-3.5" fill="currentColor" aria-hidden="true">
+      <rect x="6" y="5" width="4" height="14" rx="1" />
+      <rect x="14" y="5" width="4" height="14" rx="1" />
+    </svg>
   );
 }
